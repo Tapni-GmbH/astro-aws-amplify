@@ -7,7 +7,7 @@ applications:
           commands:
             - npm i -g pnpm
             - pnpm config set store-dir .pnpm-store
-            - pnpm i
+            - pnpm install
         build:
           commands:
             - pnpm run build
