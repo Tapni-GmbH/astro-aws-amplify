@@ -1,0 +1,787 @@
+---
+export const prerender = false;
+const slug = Astro.params.slug;
+
+const props = Astro.props;
+import '@/styles/global.css'
+
+const response = await fetch(`https://api.tapni.co/v1/objects/record/${slug}?model=profile`);
+const result = await response.json();
+const profile = result.record;
+
+const customStyle = profile?.customStyle;
+const headerLogo = customStyle?.media?.headerLogo || 'https://cdn.tapni.co/images/logo-dark.png';
+
+const isLoggedInUser = false;
+const templatePreview = false;
+const isLoggedIn = false;
+const editing = false;
+const appLang = 'en';
+const lang = {
+  en: {
+    english: "English",
+    spanish: "Spanish",
+    german: "German",
+    korean: "Korean",
+    italian: "Italian",
+    french: "French",
+    serbian: "Serbian",
+    turkish: "Turkish",
+    chinese: "Chinese",
+    app_language: "Language",
+    profile_preview: "Profile preview",
+    edit_profile: "Edit profile",
+    login: "Login",
+    referral_reach:
+        "Provide us with more information about you and your reach.",
+    referral_apply_placeholder: "How do you plan to promote Tapni?",
+    referral_apply_note:
+        "Add as many links as possible in your account, <br>\n" +
+        "\t\t  so that we can know who you are.\n" +
+        "\t\t  <br><br>Be exclusive.\n" +
+        "\t\t  <br>Not everyone gets accepted.😉",
+    referral_apply_now: "Apply now",
+    referral_apply_thanks:
+        "Thanks for applying. We will review your application soon!",
+    connect: "Connect",
+    with: "with",
+    exchange_contact: "Exchange Contact",
+    add_details: "Add more",
+    show_details: "Show more",
+    download_contact: "Download Contact",
+    stay_connected: "Stay connected",
+    no_thanks: "No Thanks",
+    connect_join: "Join Tapni",
+    connect_with: "Exchange contact with",
+    connect_required_fields: "One of the two contact fields must be provided",
+    name: "Name",
+    first_name: "First name",
+    last_name: "Last name",
+    email: "Email",
+    phone: "Phone number",
+    phone_p: "Phone",
+    company: "Company",
+    address: "Address",
+    website: "Website",
+    open: "Open",
+    delete: "Delete",
+    confirm: "Confirm",
+    cancel: "Cancel",
+    save: "Save",
+    code: "Code",
+    note: "Note",
+    note_p: "Add a note",
+    contact_card_icon: "Set text under the contact card icon",
+    contact_card_name: "Enter first and lastname",
+    contact_card_name_p: "Contact card name",
+    contact_card_email: "Enter personal email address",
+    contact_card_email_p: "Contact card email",
+    contact_card_phone: "Enter personal phone number",
+    contact_card_phone_p: "Contact card phone",
+    contact_card_website: "Enter personal website",
+    contact_card_website_p: "Contact card website",
+    contact_card_company_name: "Enter company name",
+    contact_card_company_name_p: "Contact card company name",
+    contact_card_job_title: "Job title",
+    contact_card_job_title_p: "Enter job title",
+    contact_card_company_website: "Company website",
+    contact_card_company_website_p: "Enter company website",
+    contact_card_bio: "Enter bio for the contact card",
+    contact_card_bio_p: "Enter bio for the contact card",
+    contact_card_home_address: "Enter home address",
+    contact_card_home_address_p: "Contact card home address",
+    contact_card_work_address: "Enter work address",
+    contact_card_work_address_p: "Contact card work address",
+    contact_card_social:
+        "Choose social media links to your Tapni profile <br>in order to add them in the contact card",
+    contact_card_social_p: "Choose social media links for the contact card",
+
+    link_text_p: "Link Text",
+    link_icon: "Set text under the link icon",
+
+    direct_pick: "Pick a direct link",
+    direct_p:
+        "Redirect all visitors to this link,<br> instead of your Tapni profile.",
+
+    password_change: "Change password",
+    password_repeat: "Repeat password",
+    password_reset_t: "Password reset",
+    password_current: "Enter your current password",
+    password_current_p: "Current Password",
+    password_new: "Enter your new password",
+    password_new_p: "New Password",
+    password_new_repeat: "Enter your new password again",
+    password_new_repeat_p: "Enter your new password again",
+    password_update: "Password update",
+    password_reset:
+        "If you can't remember your current password,<br>\n" +
+        "\t\t  you can reset it ",
+    delete_account_permanently:
+        "Are you sure you want to delete your Tapni account permanently?",
+    by_clicking_here: "by clicking here",
+    password_8_chars: "Password must contain at least 8 characters",
+    password_least_one_lowercase: "Password must contain at least one lowercase letter",
+    password_least_one_uppercase: "Password must contain at least one uppercase letter",
+    password_least_one_number: "Password must contain at least one number",
+    password_not_match: "Passwords do not match",
+    password_change_success: "Successfully changed password",
+
+    or: "or",
+    profile: "Profile",
+    account_settings: 'Account Settings',
+    profile_public: "Public profile",
+    profile_public_p: "Your profile is publicly available via: ",
+    profile_active: "Active profile",
+    profile_active_p:
+        "If you deactivate your profile, nobody will have access to it and the connected products won't work anymore",
+    profile_change_password: "Change Password",
+    profile_change_username: "Change Username",
+    profile_change_language: "Change Language",
+    profile_delete_account: "Delete Account",
+    profile_confirm_delete_account: "Delete Account",
+    profile_cancel_delete_account: "Cancel",
+    profile_delete_account_success: "The account has been successfully deleted",
+    profile_remove_p:
+        "If you would like to remove your account,<br>\n" +
+        "\t\t    please write us at",
+    profile_contact_support:
+        "If you have problems with the settings,<br>\n" +
+        "\t\t    please write us at",
+    profile_email_subject: "Tapni App Support",
+    profile_remove_subject: "Account Removal Request",
+    profile_update_success: "Successfully updated profile",
+    profile_complete: "Complete your profile",
+    completed: "Completed",
+    uncompleted: "Uncompleted",
+    contact_us: "contact us",
+    contact_us_verify: "in order to verify your email address.",
+    verify_email: "Verify Email address",
+    verify_email_subject: "Email Verification",
+    verify_email_inbox: "Check your inbox for",
+
+    add_first_link: "Add your first link",
+    add_first_link_p:
+        "Tap here to add your social media channels <br>\n" +
+        "\t\t\t  or contact information to your Tapni profile.",
+    add_picture: "Add a profile picture",
+    add_picture_p: "Tap here to upload your profile picture.",
+    add_tag: "Activate your Tapni",
+    add_tag_p: "Tap here to activate your Tapni NFC product.",
+    completing_profile:
+        "Problems with completing your profile?<br>\n" +
+        "\t\t    Feel free to write us at ",
+    completing_profile_subject: "Complete profile",
+    share: "Share",
+    share_profile: "Share profile",
+    share_profile_p:
+        "Others can scan this QR code <br> in order to see your profile",
+    share_profile_change_username:
+        "If you want to change your link, <br> <u>click here</u> to change username.",
+    share_profile_qr: "Share profile",
+    share_contactcard_qr: "Contact Card",
+    scan_qr_code: "Scan QR Code",
+    enter_activation_code: "Enter the activation code",
+    activate_tag: "Activate product",
+    order_tapni:
+        "If you haven't ordered your Tapni yet,<br>\n" +
+        "          you can pick yours ",
+    activation_success: "Successfully connected product. <br> You're all set!🥳",
+    activation_success_message: "Successfully connected product. You're all set!🥳",
+    activation_error: "This is not a valid product. <br> Try again.",
+    activation_error_message: "This is not a valid product. <br> Try again.",
+    activation_progress: "Product registration in progress...",
+    activation_invalid_code: "Invalid activation code.",
+    activation_qr_failed: "QR Code Scanning failed",
+    activation_qr_area: "Place a QR Code inside the scan area",
+    activation_code: "Activation code",
+    invalid_code: "Invalid code",
+    total_taps: "Total taps",
+    active: "Active",
+    tag_active_p:
+        "If deactivated, it won't open your profile <br> when you tap someone's phone.",
+    tag_delete_confirm:
+        "Save the activation code before unlinking the product,<br> otherwise it can't be reactivated.",
+
+    upload_profile_picture: "Upload Profile Picture",
+    upload_cover_picture: "Upload Cover Picture",
+    upload_link_picture: "Upload Link Picture",
+    select_from_device: "Select from device",
+    select_from_mobile: "Select picture from your mobile device",
+    select_from_computer: "or drag & drop it if you are using a computer",
+    crop: "Crop",
+    crop_upload: "Crop and Upload",
+    crop_image: "Crop Image",
+    drag_and_drop: "Drag & Drop files here",
+    upload_success: "Media successfully uploaded",
+    browser_not_supported: "Your browser does not support",
+    change_username: "Change username",
+    change_username_success: "Successfully changed username",
+    update_username: "Update username",
+    new_username: "Enter your new username",
+    username_check: "Please provide a proper username",
+    username_is_free: "username is free",
+    anonymous: "Anonymous",
+    connected: "Connected",
+    exchanged: "Exchanged",
+    accept: "Accept",
+    view: "View",
+    join: "Join",
+    add_account: "Add account",
+    complete_profile: "Complete profile",
+    my_profile: "My profile",
+    my_qr: "My QR",
+    my_connections: "My connections",
+    contacts: 'Contacts',
+    my_contacts: 'My Contacts',
+    contact_description: 'Your personal CRM for all connections you care about',
+    my_tags: "My products",
+    my_tags_description: "Manage Smart Business Cards connected with your account",
+    buy_tapni: "Buy Tapni",
+    referral_program: "Referral program",
+    device_compatibility: "Device compatibility",
+    help: "Help",
+    settings: "Settings",
+    logout: "Logout",
+    version: "Version",
+    configure: "Configure",
+    unexpected_err:
+        "Unexpected error occurred, please contact us at support@tapni.com",
+    success_login: "Successfully logged in with another account.",
+    password_reset_success: "Password reset code was sent to your email.",
+    password_reseted_success:
+        "Successfully changed password. You can log in now.",
+    success_remove_link: "Successfully removed link",
+    success_remove_picture: "Successfully removed picture",
+    profile_active_message: "Your profile is now active",
+    profile_inactive_message: "Your profile is now disabled",
+    profile_public_message: "Your profile is now public",
+    profile_private_message: "Your profile is now private",
+    redirect_enabled: "Auto-redirect Link enabled",
+    redirect_disabled: "Auto-redirect Link disabled",
+    tag_active: "Product is now active. Let’s get tappin'",
+    tag_inactive: "Product is now disabled. Your visitors will land on tapni.co",
+    tag_removed: "Successfully removed product",
+    connection_accepted: "Contact request accepted.",
+    connection_added: "New contact successfully added",
+    connection_exist: "You are already connected to this user",
+    not_found: "Not found",
+    not_found_p: "It seems like you are lost",
+    go_back: "Go back",
+    referral_p1: "Earn 20% commission<br> on referral sales 💰",
+    referral_p2: "Give others 20% off<br> with your discount code 🎁",
+    referral_p3: "It's a win-win 🤝",
+    referral_p4:
+        "If you want to change your referrals,<br>\n" +
+        "\t\t\t\t  or if you have any questions,<br>\n" +
+        "\t\t\t\t  write us on",
+    referral_p5: "Start earning money now!",
+    referral_p66: "Share your referral link and make money!",
+    referral_p6:
+        "If you are a blogger, influencer or social media enthusiast you are a perfect fit for our Referral Program.\n" +
+        "\t\t\t\tPromote our Brand and earn a 20% commission on purchases made with your discount code or referral link.",
+    referral_p7:
+        "After registering for the Tapni Referral Program, you will get a personal referral link and discount code.\n" +
+        "\t\t\t\tShare them on your website and social media, and make money while we deliver a great connecting experience.",
+    referral_p8: "Payout Note",
+    referral_p9:
+        "Paypal (Worldwide) and Bank Transfers (EU) <br> Minimum payout amount is 25€.",
+    referral_p10: "Request Payout",
+    referral_p11: "Requested Payout",
+    your_connections: "Your connections",
+    connections_p1: "Get in touch with people you met",
+    connections_p2: "<br><br>No connections so far. <br> Let's get tappin'💥",
+    connections_p3: "No connections found.",
+    connection_success: "Successfully sent a contact request",
+    exchange_success: "Successfully exchanged contacts.",
+    create_free_account:
+        "Create a free Tapni account and keep your contacts up to date!",
+    connection_edit: "Manage contact",
+    connection_edit_success: "Successfully updated contact",
+    connection_delete_success: "Successfully deleted contact",
+    search: "Search",
+    devices_p1: "Devices compatibility list",
+    devices_p2:
+        "Tapni uses technology that is compatible with most newer iPhone and Android devices.",
+    devices_p3:
+        "Some Android phones might have NFC turned off. If your Tapni is not working on an Android device, search for NFC in settings and make sure it is turned on.",
+    devices_p4: "with iOS 14 NFC widget in control center",
+    download_p1: "Download Tapni App",
+    download_p2: "Available for Apple and Android devices",
+    user_not_found: "User not found",
+    user_not_found_p: "We couldn't find the user in our database🤷",
+    taps: "taps",
+    private_profile: "Private profile",
+    private_profile_p:
+        "is a private profile. <br> Profile is visible using Tapni products only ",
+    profile_bio_p: "Write something about you or your brand",
+    add_to_contacts: "Add to contacts",
+    drag_and_drop_links: "Drag & Drop links in the desired order",
+    no_links: "There are no links in your profile.",
+    add_link: "Add link",
+    direct_link_p1: "Visitors will be automatically redirected to:",
+    profile_not_active:
+        "Your profile is currently not active <br> and only you can see it when logged in.",
+    profile_not_public:
+        "Your profile is currently not public <br> and only those who tap your products can see it.",
+    activate_profile_now: "Activate your profile now",
+    publish_profile_now: "Make your profile public now",
+    link_add_p1: "Choose a link type",
+    link_add_not_found: "No links found 🤷",
+    link_add_not_found_p2:
+        "If we missed your favourite platform, please drop us and email (<b>support@tapni.com</b>) or DM us on social media (<b>@tapni</b>)",
+    link_add_not_found_p3: "We will try our best to support all platforms 😉",
+    featured: "Featured",
+    social_media: "Social media",
+    contact: "Contact",
+    finance: "Finance",
+    portfolio: "Portfolio",
+    music: "Music",
+    business: "Business",
+    personal: "Personal",
+    fun: "Fun",
+    ecommerce: "Ecommerce",
+    more: "More",
+    email_username: "Email / Username",
+    username: "Username",
+    password: "Password",
+    sign_in: "Sign In",
+    sign_in_with: "Sign In with",
+    sign_in_with_new: "Sign In with new account",
+    sign_up_with: "Sign Up with",
+    select_sign_method: "Select a Sign In method",
+    verify_account: "Verify account",
+    terms_by_signing_in: "By signing in, you agree to our",
+    terms_by_registering: "By registering, you agree to our",
+    terms_by_submitting:
+        "By submitting this form, you agree to our",
+    terms_of_service: "Terms of Service",
+    and: "and",
+    refresh: "Refresh",
+    privacy_policy: "Privacy Policy",
+    create_account: "Create account",
+    reset_password: "Reset password",
+    reset_password_p1:
+        "If you couldn't reset your password,<br> feel free to contact us at ",
+    reset_password_p2:
+        "If you couldn't reset your password,<br> feel free to contact us at",
+    create_new_account: "Create new account",
+    maintenance_p1: "We will be back soon",
+    maintenance_p2: "Explore Tapni collections in the meantime",
+    maintenance_p3:
+        "Tapni is down for a scheduled maintenance <br> and is expected to be back online in a few minutes.",
+    offline_p1: "No Internet contact",
+    offline_p2: "Check your contact, then refresh the page",
+    offline_p3_1: "While you are offline,",
+    offline_p3_2: "you can share your contact card using this QR code",
+    products_p1: "Impress everyone you meet 😎 <br> Get yours now 👇",
+    cards: "Cards",
+    stickers: "Stickers",
+    keychains: "Keychains",
+    explore_collection: "Explore collection",
+    register: "Register",
+    register_success: "You are almost done. Please confirm your email.",
+    register_success_modal: "Successfully logged in with another account.",
+    check_your_inbox: "Check your inbox",
+    tapni_tags: "Tapni Products",
+    tapni_tags_p1: "Configure products connected to your profile",
+    tapni_tags_p2:
+        "There are no products connected to your profile. <br> Connect one now!",
+    verify_account_p1:
+        "If you didn't receive a code, check your <br> spam folder or contact us at",
+    verify_account_success:
+        "Successfully verified account. Please change your password now.",
+    verify_account_success2:
+        "Successfully verified account. You are all set!🥳",
+    welcome: "Welcome",
+    welcome_p1: "to the future of business cards",
+    how_it_works: "How it works",
+    already_registered: "Already registered",
+    error: "Error",
+    success: "Success",
+    copied: "Copied to clipboard",
+    connect_validate: "One of the two contact fields must be provided",
+    connect_validate_name: "Please enter your name",
+    connect_validate_email: "Please enter a valid email address",
+    link_validate: "Invalid link data.",
+    link_text_contact_card: "Contact card",
+    link_text_custom_link: "Custom link",
+    link_text_menu: "Menu",
+    link_text_phone: "Phone",
+    save_to_apple_wallet: "Add to Apple Wallet",
+    save_to_google_wallet: "Add to Google Wallet",
+    card: "Card",
+    sticker: "Sticker",
+    keychain: "Keychain",
+    band: "Band",
+    case: "Case",
+    standee: "Standee",
+    decoded: "Decoded",
+    wristbanditz: "Wristbanditz",
+    update_p1: "Outdated app version detected",
+    update_p2: "Update",
+    update_p3: "Please update the app to the newest version",
+    company_domain: "Your company domain",
+    search_company_domain: "Search your company domain",
+    enter_company_email: "Enter company e-mail",
+    company_not_found: "Company not found",
+    ik_company_domain: "I know the company domain",
+    idk_company_domain: "I don't know the company domain",
+    continue: "Continue",
+    forbidden_rule:
+        "This option is disabled, contact your company administrator.",
+    companyName: "Company Name",
+    createMarkerPlaceholder: "Create or select a marker",
+    clickToCreateMarker: "Click here to create marker",
+    pleaseInviteUser:
+        "Please invite user to join Tapni in order to have synchronized data with you.",
+    connectionSynchronized: "Contact data is automatically synchronized.",
+    viewProfile: "View Profile",
+    createConnectionHeader: "Create new contact",
+    createConnectionButton: "Create contact",
+    createConnectionSuccess: "Contact has been created.",
+    allow_company_management: "Allow company management",
+    company_join_request:
+        "is requesting to manage your profile and associate it to it's Enterprise account.",
+    account_ownership_transfer:
+        "Ownership of your account will be transferred to the company if you accept the request. The company will be able to modify your profile, edit and add links, see your connections, modify your password, delete your account, and more. Make sure to check with your company before accepting the request.",
+    request_expired:
+        "The request has expired, ask your company to send a new request.",
+    request_expiration_desc:
+        "For added security, the request will only work for 14 days after it was sent.",
+    invitation_link_not_valid: "The invitation link is not valid!",
+    invitation_link_not_valid2:
+        "Click the button from the invitation email again or copy the invitation link.",
+    accept_request: "Accept request",
+    close: "Close",
+    request_accepted: "The request was successfully accepted",
+    companyEmail: "Company Email",
+    companyPhone: "Company Phone",
+    addBusinessInformation: "Add business information",
+    resetFilter: "Reset",
+    selectMarkers: "Select Markers",
+    filterConnectionsHeader: "Filter Contacts",
+    selectConnectionType: "Select Contact Type",
+    all: "All",
+    direct: "Direct",
+    form: "Form",
+    manually: "Manually",
+    scan: "Scan",
+    sortOptions: "Sort Options",
+    date: "Creation Date",
+    fullName: "Full Name",
+    descending: "Descending",
+    ascending: "Ascending",
+    selectDateRange: "Select Date Range",
+    follow_up_reminder: "Follow Up Reminder",
+    now: "Now",
+    one_hour: "1 Hour",
+    one_day: "1 Day",
+    three_days: "3 Days",
+    one_week: "1 Week",
+    two_weeks: "2 Weeks",
+    one_month: "1 Month",
+    custom: "Choose time",
+    set_reminder: "Set Reminder",
+    select_date_time: "Seleccione la fecha y la hora",
+    enter_reminder_text: "Introduzca el texto del recordatorio",
+    reminder_created: "Reminder successfully created",
+    connectionNameLabel: "Enter contact Name",
+    connectionEmailLabel: "Enter private email address",
+    privatePhoneLabel: "Enter private phone number",
+    companyNameLabel: "Enter company name",
+    businessEmail: "Business email address",
+    businessEmailLabel: "Enter business email address",
+    businessPhone: "Business phone number",
+    businessPhoneLabel: "Enter business phone number",
+    businessFax: "Business fax",
+    businessFaxLabel: "Enter business fax number",
+    noteLabel: "Enter note",
+    markersLabel: "Add contact markers",
+    showScan: "Show Scan",
+    hideScan: "Hide Scan",
+    create_connection: "Create contact",
+    create_manually: "Create Manually",
+    create_using_scanner: "Scan paper business card",
+    companyTitle: "Job Title",
+    companyTitleLabel: "Enter Job Title",
+    allConnectionsLabel: "All contact types",
+    directConnectionsLabel: "Direct in-app contact with Tapni Users",
+    formConnectionsLabel: "Contacts filled on connect form",
+    manualConnectionsLabel: "Manually created connections",
+    scanConnectionsLabel: "Card scanner created connections",
+    analyticsHeader: "Analytics",
+    analyticsProfileViews: "Visits",
+    analyticsLinkClicks: "Clicks",
+    analyticsClickTroughRatio: "Click %",
+    analyticsTotalConnections: "Total Contacts",
+    analyticsTopLinks: "Most Popular Links",
+    analyticsProfileVisits: "Profile Visits",
+    analyticsLinkVisits: "Link Visits",
+    analyticsNewConnections: "New Contacts",
+    analyticsTopCountries: "Top Countries",
+    analyticsTopReferers: "Top Referers",
+
+    tapni_for_business: "Tapni for Business",
+    supercharge_your_business: "Supercharge your Business with the #1 Digital Business Card Platform made for Businesses and Teams.",
+
+    for_teams_and_businesses: "For Teams & Businesses",
+    number_one_digital_business_card_platform: "#1 Digital Business Card Platform",
+    manage_teams_collect_leads_automate_workflows: "Manage Teams, Collect Leads & Automate Workflows",
+    read_more: "Read More",
+    navigate_to_business_tapni_com: "1) Navigate to business.tapni.com",
+    start_qr_scanner_via_button_below: "2) Start QR Scanner via button below",
+    scan_the_qr_code_from_the_screen: "3) Scan the QR code from the screen",
+    enjoy_using_our_platform: "4) Enjoy using our platform",
+    start_qr_scanner: "Start QR Scanner",
+
+    change_language: "Change Language",
+    terms_and_privacy: "Terms & Privacy",
+
+    lead_capture_mode: "Lead Capture Form",
+    lead_capture_mode_description: "The Lead Capture Form will be displayed on your profile",
+    public_profile_mode: "Public Profile Mode",
+    public_profile_mode_description: "Make your profile",
+    public_profile_mode_available: "publicly available",
+
+    link_a_device: 'Link a device',
+
+    streetName: 'Street name',
+    streetNr: 'Number',
+    plz: 'ZIP',
+    city: 'City',
+    country: 'Country',
+
+    choose_template: 'Choose template',
+
+    contactcard: 'Contact card',
+    customlink: 'Custom link',
+    onboarding: 'Onboarding',
+
+    tag_text_p: "Product name",
+    tag_text_p2: "Set a custom name for the product",
+    connect_validate_consent: "Please accept the privacy consent",
+
+    links: 'Links',
+    manage: "Manage",
+    buy_domain: "Custom Domain",
+    buy_domain_p: "Replace t.link with your own Custom Domain and share your digital business card with a professional touch.",
+
+    enable_lead_button: "Enable 'Exchange Contact' Button",
+    enable_lead_button_p: "The contact exchange button will be displayed on your profile",
+    form_auto: 'Open form on profile visit',
+    form_auto_p: 'The contact exchange form will be opened automatically when someone opens your profile',
+    form_required: 'Form filling required',
+    form_required_p: 'Make the form mandatory to be filled out before it can be closed.',
+
+    enter_code_manually: 'Enter the code manually',
+    activate_via_nfc: 'Activate via NFC',
+    qr_code: 'QR Code',
+    nfc: 'NFC',
+    nfc_not_available: 'NFC is not available on this device',
+    nfc_not_enabled: 'NFC is not enabled. Please enable NFC in the settings.',
+    nfc_no_link_found: 'No NFC link found. Please contact support.',
+    activation_second_step_needed: 'One more step needed. <br> Scan the product now via',
+
+    scanner_card_p: 'Point the camera at paper card <br> and tap the Camera button.',
+    scanner_qr_p: 'Point the camera at QR Code <br> and enjoy auto-detect.',
+    scanner_badge_p: 'Point the camera at event badge <br> and tap the Camera button.',
+    paper_card: 'Paper Card',
+    event_badge: 'Event Badge'
+  }
+}
+
+const isEmpty = (obj) => !obj || Object.keys(obj).length === 0;
+const replaceProfileVariables = (data, profile) => {
+  // Implement your variable replacement logic here
+  return data;
+};
+
+import LinkIcon from "../../components/vue/LinkIcon.vue";
+
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tapni Profile</title>
+  <style>
+    .coverPhoto {
+      background-size: cover;
+      background-position: center;
+    }
+
+  </style>
+</head>
+<body class="bg-white">
+<div class="container mx-auto">
+  {!profile ? (
+      <div class="text-center pt-16 pb-8">
+        <p class="text-lg font-bold mt-4">
+          {lang[appLang].user_not_found}
+        </p>
+        <p class="text-sm mt-4">
+          {lang[appLang].user_not_found_p}
+        </p>
+        <a href="https://t.link" class="inline-block mt-4 bg-white text-black px-4 py-2 rounded hover:bg-gray-200" style="z-index: 999;">
+          {lang[appLang].go_back}
+        </a>
+      </div>
+    ) : (
+    <div
+        id="profilePreview" style="max-width: 667px; margin: 0 auto;"
+        class="min-h-screen shadow-md flex flex-col justify-center items-center pb-[calc(180px+env(safe-area-inset-bottom))]"
+        style={`background: ${customStyle?.style?.background || 'none'}; padding-top: ${profile?.cover || customStyle?.media?.cover && (customStyle?.config?.showCover !== false || customStyle?.style?.profilePhoto.mode === 'full') ? '0' : '30px'}`}>
+
+      <a
+          href={isLoggedInUser ? '/' : '/login'}
+          class={`absolute top-0 left-0 w-full flex justify-center items-center ${profile?.cover || customStyle?.media?.cover && (customStyle?.config?.showCover !== false || customStyle?.style?.profilePhoto.mode === 'full') ? 'mt-0' : 'mt-4'}`}
+          v-if={((profile?.username && profile?.username === profile?.username) || profile?.tags?.some(t => t.serial === profile?.serial || t.hash === profile?.serial)) && !customStyle?.config?.showLogo === false}>
+        <img
+            src={headerLogo}
+            alt="Logo"
+            class="h-12"
+            onerror="this.onerror=null;this.src='https://cdn.tapni.co/images/logo-dark.png';"
+            style={customStyle?.style?.logo}
+        />
+      </a>
+
+      <button
+          class="absolute right-2 top-2 w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-md hover:bg-gray-100"
+          onClick={() => share(`https://${hostname}/${profile?.username}`, 'profile_share')}>
+        <img
+            src="https://cdn.tapni.co/icons/share.png"
+            class="w-6 h-6"
+            alt="Share"
+        />
+      </button>
+
+      {customStyle?.media?.customImage && (
+          <div style={customStyle?.style?.customImage}>
+            <img
+                class="w-full"
+                src={customStyle?.media?.customImage}
+                alt="Custom Image"
+            />
+          </div>
+      )}
+
+      {customStyle?.media?.customVideo && (
+          <div style={customStyle?.style?.customVideo}>
+            <video
+                class="w-full"
+                playsInline
+                loop
+                autoPlay
+                muted
+                src={customStyle?.media?.customVideo}>
+            </video>
+          </div>
+      )}
+
+      <div class="w-full px-0 py-12">
+        <div class="w-full flex flex-col mb-2">
+          {profile?.cover || customStyle?.media?.cover && customStyle?.config?.showCover !== false && (
+              <div
+                  class={`relative ${!profile?.cover && !customStyle?.media?.cover ? 'mt-0' : 'mt-[-72px]'}`}
+                  style={customStyle?.style?.coverPhoto}>
+                <img
+                    src={customStyle?.media?.cover || profile.cover}
+                    class="w-full object-cover"
+                    alt="Cover"
+                />
+              </div>
+          )}
+          <div style={`margin-top: ${profile?.cover || customStyle?.media?.cover && customStyle?.config?.showCover !== false ? '-8%' : ''}`}>
+            {profile?.photo && (
+                <a
+                    class="relative block mx-auto mt-[-36px] bg-white shadow-md rounded-full overflow-hidden"
+                    style={customStyle?.style?.profilePhoto}>
+                  <img
+                      src={profile.photo}
+                      class="rounded-full"
+                      onerror="this.onerror=null;this.src='https://cdn.tapni.co/images/user.png';"
+                      alt="User"
+                  />
+                </a>
+            )}
+          </div>
+
+          {!profile.connected && profile.is_public === false && !profile.isTap && !isLoggedInUser && (
+              <div class="pt-16 pb-8 text-center">
+                <p class="text-lg mt-16">
+                  {lang[appLang].private_profile}
+                </p>
+                <p class="text-base mt-4">
+                  @{profile.username} <span>{lang[appLang].private_profile_p}</span>
+                </p>
+              </div>
+            )}
+
+          {(profile.connected || profile.is_public || profile.isTap || isLoggedInUser) && (
+              <div class="text-center">
+                <p class="block text-lg font-bold text-gray-800 mt-4" style={customStyle?.style?.name}>
+                  {profile.name}
+                </p>
+                {profile.bio && (
+                    <p class="text-sm text-gray-600 mt-2">
+                      {profile.bio}
+                    </p>
+                )}
+              </div>
+          )}
+        </div>
+
+        {!profile.connected && profile.is_public && profile.lead_form.show && !templatePreview && false && (
+            <button
+                class="fixed bottom-0 right-0 mb-8 mr-4 bg-white text-black px-6 py-2 rounded-full shadow-md hover:bg-gray-100"
+                onClick={() => this.$emit('connect')}>
+              {isLoggedIn && !isLoggedInUser ? (
+                  <span>
+                {lang[appLang].connect} {lang[appLang].with} {profile.name ? profile.name.split(" ")[0] : profile.username}
+              </span>
+              ) : (
+                  <span>
+                {replaceProfileVariables(customStyle?.config?.actionButtonHomeText || lang[appLang].exchange_contact, profile)}
+              </span>
+              )}
+            </button>
+        )}
+
+        {profile.connected && !isLoggedIn && (
+            <button
+                disabled
+                class="fixed bottom-0 right-0 mb-8 mr-4 bg-white text-black px-6 py-2 rounded-full shadow-md cursor-not-allowed">
+              {lang[appLang].exchanged}
+            </button>
+        )}
+      </div>
+
+      <div style="" class="w-full">
+        {profile && (profile.is_public || profile.connected || profile.isTap || (!templatePreview && profile.username === storage.username)) && (
+            <div class={`content-boxed text-center mx-auto ${!editing ? 'w-full p-0' : 'w-11/12 px-3'}`} style={customStyle?.style?.linksContainer}>
+              <div class={`flex flex-col gap-2 ${templatePreview ? customStyle.config.linksArrangement === 'link-list' ? 'flex-col' : 'flex-row' : profile.link_style === 'link-list' ? 'flex-col' : 'flex-row'}`}>
+                {profile.links.filter(l => l.is_active).map((item, index) => (
+                    <span key={item.id + index} class="flex justify-center">
+                        <LinkIcon client:load
+                                  data={item}
+                                  linkStyle={templatePreview ? customStyle.config.linksArrangement : 'link-list'}
+                                  editing={false}
+                                  class="transition-transform"
+                                  style={customStyle?.style?.link}
+                                  customLinkStyle={{ linkIcon: customStyle?.style?.linkIcon, ...customStyle?.style?.link }}
+                                  shareIconStyle={customStyle?.style?.linkShareIcon}
+                                  clickable={!templatePreview}
+                        />
+                      </span>
+                ))}
+              </div>
+            </div>
+        )}
+      </div>
+    </div>
+    )}
+    </div>
+</body>
+</html>
+
