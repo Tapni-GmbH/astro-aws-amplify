@@ -1,5 +1,26 @@
 ---
+// Export the prerender option
 export const prerender = false;
+
+// Define the middleware function
+export async function onRequest(context, next) {
+  // Get the request object from the context
+  const { request } = context;
+
+  // Check if the request's hostname matches 'help.tapni.com'
+  if (request.headers.get('host') === 'help.tapni.com') {
+    // Redirect to 'https://tapni.com/help'
+    return new Response(null, {
+      status: 301,
+      headers: {
+        Location: 'https://tapni.com/help',
+      },
+    });
+  }
+
+  // Continue to the next middleware or route handler
+  return context.next();
+}
 
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
