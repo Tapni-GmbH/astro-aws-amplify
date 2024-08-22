@@ -7,7 +7,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Card from "../components/flowbite/Card.astro";
 import Modal from "../components/flowbite/Modal.astro";
-import BlurIn from "@/components/magicui/blur-in";
+// import BlurIn from "../components/magicui/blur-in";
 
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
@@ -88,7 +88,7 @@ const data = await response.json();
     </div>
   </section>
   <h1 class="text-4xl font-bold mb-6">🧑‍🚀 Hello, Astronaut!</h1>
-  <BlurIn word={"Hello World"} client:load></BlurIn>
+  <!--<BlurIn word={"Hello World"} client:load></BlurIn>-->
   <Modal />
   <Card
       href="https://astro.build/chat/"
