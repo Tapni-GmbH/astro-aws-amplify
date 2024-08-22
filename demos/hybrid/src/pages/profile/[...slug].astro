@@ -596,7 +596,7 @@ const replaceProfileVariables = (data, profile) => {
   return data;
 };
 
-import LinkIcon from "../../components/vue/LinkIcon.vue";
+// import LinkIcon from "../../components/vue/LinkIcon.vue";
 
 ---
 
@@ -763,7 +763,7 @@ import LinkIcon from "../../components/vue/LinkIcon.vue";
               <div class={`flex flex-col gap-2 ${templatePreview ? customStyle.config.linksArrangement === 'link-list' ? 'flex-col' : 'flex-row' : profile.link_style === 'link-list' ? 'flex-col' : 'flex-row'}`}>
                 {profile.links.filter(l => l.is_active).map((item, index) => (
                     <span key={item.id + index} class="flex justify-center">
-                        <LinkIcon client:load
+                        <!--<LinkIcon client:load
                                   data={item}
                                   linkStyle={templatePreview ? customStyle.config.linksArrangement : 'link-list'}
                                   editing={false}
@@ -772,7 +772,7 @@ import LinkIcon from "../../components/vue/LinkIcon.vue";
                                   customLinkStyle={{ linkIcon: customStyle?.style?.linkIcon, ...customStyle?.style?.link }}
                                   shareIconStyle={customStyle?.style?.linkShareIcon}
                                   clickable={!templatePreview}
-                        />
+                        />-->
                       </span>
                 ))}
               </div>
