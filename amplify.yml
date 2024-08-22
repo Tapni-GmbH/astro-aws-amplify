@@ -6,7 +6,6 @@ applications:
         preBuild:
           commands:
             - npm install
-            - npm ci
         build:
           commands:
             - env >> .env
