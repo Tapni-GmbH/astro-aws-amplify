@@ -10,7 +10,10 @@ applications:
             - pnpm i
         build:
           commands:
+            - env >> .env
             - pnpm run build
+            - mv node_modules ./.amplify-hosting/compute/default
+            - mv .env ./.amplify-hosting/compute/default/.env
       artifacts:
         baseDirectory: .amplify-hosting
         files:
