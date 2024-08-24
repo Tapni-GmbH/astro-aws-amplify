@@ -5,13 +5,11 @@ applications:
       phases:
         preBuild:
           commands:
-            - npm i -g pnpm
-            - pnpm config set store-dir .pnpm-store
-            - pnpm i
+            - npm install
         build:
           commands:
             - env >> .env
-            - pnpm run build
+            - npm run build
             - mv node_modules ./.amplify-hosting/compute/default
             - mv .env ./.amplify-hosting/compute/default/.env
       artifacts:
@@ -20,4 +18,4 @@ applications:
           - '**/*'
       cache:
         paths:
-          - .pnpm-store/**/*
+          - node_modules/**/*
